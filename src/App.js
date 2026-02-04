@@ -43,42 +43,61 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 py-12 px-4 pb-32">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-8">
-          Custom Music Recorder
-        </h1>
+    <div className="min-h-screen bg-[#F0F0DB] py-8 px-4 pb-32">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-3 mb-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#30364F] to-[#ACBAC4] rounded-2xl flex items-center justify-center text-2xl shadow-lg">
+              🎵
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-[#30364F]">
+              SoundKeeper
+            </h1>
+          </div>
+          <p className="text-[#30364F]/70 text-sm md:text-base">
+            Capture and collect your favorite sounds from anywhere
+          </p>
+        </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-4 mb-8 justify-center">
+        <div className="flex gap-3 mb-8 p-2 bg-[#E1D9BC] rounded-2xl shadow-sm max-w-md mx-auto">
           <button
             onClick={() => setActiveTab('recorder')}
-            className={`px-6 py-3 rounded-lg font-bold transition-colors ${
+            className={`flex-1 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
               activeTab === 'recorder'
-                ? 'bg-white text-purple-600'
-                : 'bg-white/20 text-white hover:bg-white/30'
+                ? 'bg-[#30364F] text-white shadow-lg transform scale-105'
+                : 'text-[#30364F]/70 hover:text-[#30364F] hover:bg-[#F0F0DB]/50'
             }`}
           >
-            🎙️ Recorder
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-xl">🎙️</span>
+              <span className="hidden sm:inline">Recorder</span>
+            </div>
           </button>
           <button
             onClick={() => setActiveTab('library')}
-            className={`px-6 py-3 rounded-lg font-bold transition-colors ${
+            className={`flex-1 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
               activeTab === 'library'
-                ? 'bg-white text-purple-600'
-                : 'bg-white/20 text-white hover:bg-white/30'
+                ? 'bg-[#30364F] text-white shadow-lg transform scale-105'
+                : 'text-[#30364F]/70 hover:text-[#30364F] hover:bg-[#F0F0DB]/50'
             }`}
           >
-            📚 Library
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-xl">📚</span>
+              <span className="hidden sm:inline">Library</span>
+            </div>
           </button>
         </div>
 
         {/* Content */}
-        {activeTab === 'recorder' ? (
-          <AudioRecorder onRecordingComplete={handleRecordingComplete} />
-        ) : (
-          <Library onPlayTrack={handlePlayTrack} />
-        )}
+        <div className="transition-all duration-300">
+          {activeTab === 'recorder' ? (
+            <AudioRecorder onRecordingComplete={handleRecordingComplete} />
+          ) : (
+            <Library onPlayTrack={handlePlayTrack} />
+          )}
+        </div>
       </div>
 
       {/* Music Player */}
@@ -91,6 +110,6 @@ function App() {
       />
     </div>
   );
-};
+}
 
 export default App;
