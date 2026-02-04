@@ -130,7 +130,7 @@ const Library = ({ onPlayTrack }) => {
                 {/* Actions */}
                 <div className="flex gap-2">
                   <button
-                    onClick={() => onPlayTrack(recording)}
+                    onClick={() => onPlayTrack(recording, filteredRecordings)}
                     className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-colors text-sm font-semibold"
                   >
                     ▶ Play

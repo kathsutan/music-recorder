@@ -1,23 +1,49 @@
 import React, { useState } from 'react';
 import AudioRecorder from './components/AudioRecorder';
 import Library from './components/Library';
+import MusicPlayer from './components/MusicPlayer';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('recorder'); // 'recorder' or 'library'
+  const [activeTab, setActiveTab] = useState('recorder');
   const [currentTrack, setCurrentTrack] = useState(null);
+  const [playlist, setPlaylist] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleRecordingComplete = (recordingData) => {
     console.log('Recording completed:', recordingData);
   };
 
-  const handlePlayTrack = (track) => {
+  const handlePlayTrack = (track, allTracks = []) => {
     setCurrentTrack(track);
-    console.log('Playing track:', track);
-    // We'll build a proper player in the next step
+    setPlaylist(allTracks);
+    const index = allTracks.findIndex(t => t.id === track.id);
+    setCurrentIndex(index !== -1 ? index : 0);
+  };
+
+  const handleNext = () => {
+    if (playlist.length > 0) {
+      const nextIndex = (currentIndex + 1) % playlist.length;
+      setCurrentIndex(nextIndex);
+      setCurrentTrack(playlist[nextIndex]);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (playlist.length > 0) {
+      const prevIndex = currentIndex === 0 ? playlist.length - 1 : currentIndex - 1;
+      setCurrentIndex(prevIndex);
+      setCurrentTrack(playlist[prevIndex]);
+    }
+  };
+
+  const handleClosePlayer = () => {
+    setCurrentTrack(null);
+    setPlaylist([]);
+    setCurrentIndex(0);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 py-12 px-4 pb-32">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-8">
           Custom Music Recorder
@@ -54,8 +80,17 @@ function App() {
           <Library onPlayTrack={handlePlayTrack} />
         )}
       </div>
+
+      {/* Music Player */}
+      <MusicPlayer
+        currentTrack={currentTrack}
+        playlist={playlist}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+        onClose={handleClosePlayer}
+      />
     </div>
   );
-}
+};
 
 export default App;
